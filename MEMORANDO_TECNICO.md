@@ -34,8 +34,6 @@ Para evitar o erro arquitetural de avaliar o atendimento como um bloco monolíti
 
 Foram selecionadas **quatro funcionalidades** representativas do espectro arquitetural da instituição: (1) interpretação semântica pura de baixo impacto; (2) geração de rascunhos assistida; (3) atendimento a consultas factuais e padronizadas; e (4) decisões críticas com impacto direto sobre direitos e finanças do estudante.
 
----
-
 #### Funcionalidade 1: Classificação Temática de Mensagens em Linguagem Livre
 
 *(Candidata aparentemente adequada a LLM)
@@ -128,6 +126,34 @@ Foram selecionadas **quatro funcionalidades** representativas do espectro arquit
 
 ---
 
+### 2.3 Matriz de Comparação: LLM vs. Alternativas Convencionais
+
+Para fundamentar racionalmente onde a Inteligência Artificial agrega valor real e onde mecanismos determinísticos tradicionais oferecem maior segurança, menor latência e menor custo, as duas abordagens foram comparadas em seis dimensões técnicas de engenharia de software:
+
+#### 2.3.1 Comparativo Arquitetural Geral
+
+| Dimensão Técnica | Abordagem com LLM (Modelos de Linguagem) | Código Convencional / Regras Determinísticas |
+| :--- | :--- | :--- |
+| **1. Estrutura dos Dados de Entrada** | Lida nativamente com texto livre, não estruturado, ruídos gramaticais e ambiguidade semântica. | Exige dados estritamente padronizados (campos de formulário, IDs, parâmetros exatos); não tolera ruído ou ambiguidade sem mapeamento prévio. |
+| **2. Comportamento e Previsibilidade** | **Probabilístico / estocástico:** prevê a sequência de tokens estatisticamente mais provável; pequenas variações na entrada podem alterar a saída. | **Determinístico:** executa regras lógicas exatas (`if/else`, consultas SQL); a mesma entrada sempre produz exatamente a mesma saída. |
+| **3. Latência e SLA de Execução** | **Alta (200 ms a 2–5 segundos):** exige chamada de rede/API e inferência pesada em GPUs, podendo degradar fluxos em tempo real. | **Ultra baixa (< 1 milissegundo):** executa localmente em CPU ou consulta indexada em banco relacional, atendendo SLAs rígidos. |
+| **4. Custo Operacional em Escala** | **Custo variável por token:** cresce de forma linear a exponencial conforme o volume de mensagens e o tamanho do contexto. | **Custo marginal zero por execução:** roda na infraestrutura já provisionada sem cobrança adicional por volume de requisições. |
+| **5. Auditabilidade e Explicabilidade** | **Caixa-preta probabilística:** não permite rastrear linha a linha o motivo lógico de uma decisão e está sujeita a alucinações e *prompt injection*. | **100% auditável e rastreável:** cada decisão ou consulta pode ser verificada linha a linha no código e nos logs do banco de dados. |
+| **6. Estabilidade e Necessidade de Dados (*Cold Start*)** | Alta agilidade de prototipagem sem exigir dados rotulados prévios (*zero-shot* / *few-shot*), porém com menor estabilidade estrutural a longo prazo. | Estabilidade estrutural superior a longo prazo e independência de treino prévio, mas exige especificação manual de todas as regras e exceções. |
+
+#### 2.3.2 Matriz de Decisão Aplicada às 4 Funcionalidades e Alternativas Sem IA
+
+Com base nas seis dimensões técnicas acima, avaliou-se a adequação do LLM frente às soluções convencionais sem IA para cada funcionalidade selecionada:
+
+| Funcionalidade Analisada | Avaliação Técnica (LLM vs. Convencional) | Alternativa Sem IA Recomendada (Obrigatória) | Direcionamento Preliminar |
+| :--- | :--- | :--- | :--- |
+| **1. Classificação temática de mensagens em linguagem livre** | **Vantagem do LLM na entrada não estruturada:** supera o *cold start* e interpreta intenções ambíguas sem exigir cadastro prévio de sinônimos. Como o impacto de erro é baixo/reversível, a latência (2–5 s) e a natureza probabilística são toleráveis com saída estruturada. | **Formulário estruturado com validação + menu de categorias** no portal do aluno, apoiado por **roteador de regras por palavras-chave** para solicitações diretas. | **Candidata a LLM** (com regra de encaminhamento humano para mensagens ambíguas ou com múltiplos assuntos). |
+| **2. Produção de rascunho de resposta para atendimento** | **Vantagem do LLM na síntese textual:** acelera a redação a partir de contexto documental. Contudo, o comportamento probabilístico e o risco de alucinação impedem autonomia total, exigindo ancoragem documental e validação antes do envio. | **Base de Perguntas Frequentes (FAQ) e biblioteca de modelos fixos (*templates*)** selecionados pelo atendente com preenchimento automático de variáveis do sistema. | **Candidata a LLM como copiloto** (com revisão humana obrigatória antes do disparo ao estudante). |
+| **3. Consulta a dados cadastrais, status de pagamento e calendário acadêmico** | **Superioridade absoluta do código convencional:** dados são estritamente estruturados e exigem determinismo, latência < 1 ms, custo marginal zero e risco zero de alucinação de datas ou valores. | **Consultas diretas via SQL/API ao banco de dados relacional** integradas ao portal de autoatendimento (formulários validados) e página oficial de **Calendário Acadêmico / FAQ**. | **Não usar IA** (resolver 100% por código determinístico). |
+| **4. Apoio à decisão sobre revisão de nota, benefício financeiro ou medida acadêmica** | **Inviabilidade técnica e legal do LLM:** a opacidade de caixa-preta, a falta de explicabilidade (Art. 20 da LGPD), o risco de viés e a suscetibilidade a *prompt injection* tornam o uso de modelos probabilísticos proibitivo diante do alto impacto. | **Triagem e decisão 100% humanas** apoiadas por **regras de elegibilidade determinísticas no banco de dados relacional** e registro formal auditável de parecer. | **Não usar IA / Não delegar** (manter sob responsabilidade humana exclusiva). |
+
+---
+
 ## 3. Funcionamento e Limitações dos LLMs
 
 *(Relação entre características técnicas dos LLMs e evidências observadas nos testes).*
@@ -166,7 +192,7 @@ Foram selecionadas **quatro funcionalidades** representativas do espectro arquit
 
 ## 9. Evolução por Nível
 
-* **Nível Básico (`p1-basico`):** Em construção — Concluída a decomposição do sistema e análise das 4 funcionalidades (`BAS-01`).
+* **Nível Básico (`p1-basico`):** Em construção — Concluídas a decomposição/análise das 4 funcionalidades (`BAS-01`) e a matriz de comparação LLM vs. alternativas convencionais (`BAS-02`).
 * **Nível Intermediário (`p1-intermediario`):** Pendente.
 * **Nível Avançado (`p1-avancado`):** Pendente.
 
