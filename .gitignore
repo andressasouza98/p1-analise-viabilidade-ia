@@ -1,0 +1,16 @@
+# Variáveis de ambiente e segredos (nunca publicar)
+.env
+.env.*
+!.env.example
+
+# Ambientes virtuais Python (caso use script opcional)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Arquivos de sistema e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
