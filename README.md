@@ -17,6 +17,7 @@ Produzir uma recomendação técnica fundamentada e auditável (`MEMORANDO_TECNI
 
 ## 3. Estrutura dos Arquivos
 
+```text
 ├── README.md                  # Visão geral, estrutura e instruções de reprodução
 ├── MEMORANDO_TECNICO.md       # Artefato principal com análise, experimentos, riscos e recomendação
 └── experimentos/              # Registros de prompts, casos de teste fictícios e resultados
