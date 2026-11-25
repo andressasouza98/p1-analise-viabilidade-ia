@@ -1,9 +1,9 @@
 # P1 — Análise de Viabilidade para Uso de IA no Atendimento Educacional
 
-> **Programa:** Capacitação em Sistemas Agentes — Instituto Hardware BR (HBr) / SOFTEX  
-> **Projeto:** P1 — Análise de viabilidade para um caso real (Competências C05–C09)  
-> **Autora:** Andressa Alves de Souza  
-> **Status:** 🚧 Em desenvolvimento (Nível Básico — `BAS-01` concluído)
+> **Programa:** Capacitação em Sistemas Agentes — Instituto Hardware BR (HBr) / SOFTEX
+> **Projeto:** P1 — Análise de viabilidade para um caso real (Competências C05–C09)
+> **Autora:** Andressa Alves de Souza
+> **Status:** ✅ Nível Básico concluído (`tag: p1-basico`)
 
 ---
 
@@ -18,25 +18,25 @@ Produzir uma recomendação técnica fundamentada e auditável (`MEMORANDO_TECNI
 ## 3. Estrutura dos Arquivos
 
 ```text
-├── README.md                  # Visão geral, estrutura e instruções de reprodução
-├── MEMORANDO_TECNICO.md       # Artefato principal com análise, experimentos, riscos e recomendação
-└── experimentos/              # Registros de prompts, casos de teste fictícios e resultados
+├── README.md              # Visão geral, estrutura e instruções de reprodução
+├── MEMORANDO_TECNICO.md   # Artefato principal com análise, experimentos, riscos e recomendação
+└── experimentos/          # Registros de prompts, casos de teste fictícios e resultados
 ```
 
 ## 4. Ferramentas Utilizadas
 
-* **Ambiente de Experimentação de Prompts:** Google AI Studio *(a ser detalhado com modelo e hiperparâmetros na etapa de testes)*
+* **Ambiente de Experimentação de Prompts:** Google AI Studio — Modelo `gemini-3.5-flash-lite` (*Thinking level: Minimal*, ferramentas externas desativadas e 100% dados fictícios)
 * **Versionamento:** Git e GitHub (com tags incrementais `p1-basico`, `p1-intermediario` e `p1-avancado`)
 
 ## 5. Instruções para Reproduzir os Testes
 
-*(Esta seção será preenchida na etapa `p1-intermediario` com o passo a passo exato de configuração, parâmetros e execução dos casos de teste fictícios).*
+*(Os Prompts Protótipos V1 Baseline e os 6 cenários de teste executados no Google AI Studio estão documentados na Seção 4 do `MEMORANDO_TECNICO.md`; o roteiro expandido será detalhado na etapa `p1-intermediario`).*
 
 ## 6. Artefatos e Links da Entrega
 
 * **Memorando Técnico:** [MEMORANDO_TECNICO.md](./MEMORANDO_TECNICO.md)
-* **Vídeo de Apresentação (YouTube - Não Listado):** *Aguardando conclusão da etapa Avançada*
+* **Vídeo de Apresentação (YouTube - Não Listado):** *Aguardando conclusão da etapa Avançado*
 * **Marcos (Tags/Releases):**
-  * `p1-basico` *(em andamento)*
+  * `p1-basico` *(concluído)*
   * `p1-intermediario` *(pendente)*
   * `p1-avancado` *(pendente)*
